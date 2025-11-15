@@ -26,8 +26,6 @@ Route::prefix('v1')->group(function (){
     Route::apiResource('/posts', V1PostController::class);
 });
 // here we add the prefix v2 to say that this controller is for the secod version of our API
-
-
 Route::prefix('v2')->group(function (){
     Route::apiResource('/posts', V2POstController::class);
 });
