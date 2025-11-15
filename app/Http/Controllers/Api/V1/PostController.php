@@ -30,7 +30,7 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    //HERE WE WILL RECIVE STATUCODE 201
+    //HERE WE WILL RECIVE STATUSCODE 201
     {
         //WHIT THIS LINE WE RETURN EVERYTHING THAT THE USER SENDS
         // $data = $request->all();
