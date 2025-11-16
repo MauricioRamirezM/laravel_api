@@ -5,6 +5,8 @@
 namespace App\Http\Controllers\Api\V2;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePostRequest;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -14,38 +16,52 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+         return Post::all();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        //
+        $data = $request->validated();
+        $data['author_id'] = 1;
+        $post = Post::create($data);
+        return response()->json($post, 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+
+    /*IF WE PASS THE INSTANCE OF OUR POST::CLASS AND A $post VARIABLE, LARAVEL IS SMART ENOGHT TO KNOW WE ARE TRYING TO GET THE POST THAT WE SEND IN THE URL, IF IT DOES NOT FIND IT GONNA MAKE THE SAME AS THE COMMENTED FUNCTION (findOrFail())
+    */
+    public function show(Post $post)
     {
-        //
+        // $post = Post::findOrFail($id);
+        return response()->json( $post);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->validated([
+            'title' => 'required|string|min:2',
+            'body' => ['required', 'string', 'min:2']
+        ]);
+        $post->update($data);
+        return $post;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return response()->noContent();
     }
 }
