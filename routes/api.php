@@ -30,3 +30,4 @@ Route::prefix('v2')->group(function (){
     Route::apiResource('/posts', V2PostController::class);
 });
  
+require __DIR__.'/auth.php';

@@ -28,7 +28,7 @@ class PostController extends Controller
         $data = $request->validated();
         $data['author_id'] = 1;
         $post = Post::create($data);
-        return response()->json(new PostResource($post), 201);
+        return new PostResource($post);
     }
 
     /**
