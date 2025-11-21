@@ -12,22 +12,23 @@ use Illuminate\Support\Facades\Route;
 // CHECK THE V1 AND V2 FOLDERS TO SEE THE DIFFERENT CONTROLLERS 
 
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
 
-Route::get('/hello', function() {
-    return ["message" => "Hello Laavel API" ];
+Route::middleware('auth:sanctum')->group(function () {
+
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    })->middleware('auth:sanctum');
+    Route::prefix('v2')->group(function () {
+        Route::apiResource('/posts', V2PostController::class);
+    });
 });
 /*The PREFIX method is to set a string right before of the route ("/posts"), normalyy we have: api/posts/{post}
 but with this method we have api/v1/posts/{post (it adds the V1)
 */
-Route::prefix('v1')->group(function (){
+Route::prefix('v1')->group(function () {
     Route::apiResource('/posts', V1PostController::class);
 });
 // here we add the prefix v2 to say that this controller is for the secod version of our API
-Route::prefix('v2')->group(function (){
-    Route::apiResource('/posts', V2PostController::class);
-});
- 
-require __DIR__.'/auth.php';
+
+
+require __DIR__ . '/auth.php';
