@@ -11,7 +11,6 @@ class ImageGeneratorController extends Controller
 {
     public function __construct(private OpenAiService $openAiService)
     {
-        throw new \Exception('Not implemented');
     }
     public function index() {}
     public function store(GeneratePromptRequest $request)
